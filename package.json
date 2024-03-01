@@ -3,8 +3,8 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "prettier": "prettier --write --ignore-unknown .",
-    "prettier:check": "prettier --check --ignore-unknown .",
+    "prettier": "prettier --write --ignore-unknown nextjs-test-app",
+    "prettier:check": "prettier --check --ignore-unknown nextjs-test-app",
     "start": "next start"
   },
   "dependencies": {
