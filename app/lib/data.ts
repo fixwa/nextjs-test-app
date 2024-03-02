@@ -11,7 +11,7 @@ import {
 import { formatCurrency } from './utils';
 import { unstable_noStore as noStore } from 'next/cache';
 
-export async function fetchRevenue() {
+export async function fetchRevenue():Promise<Revenue[]> {
   // Add noStore() here to prevent the response from being cached.
   // This is equivalent to in fetch(..., {cache: 'no-store'}).
   noStore();
@@ -186,7 +186,7 @@ export async function fetchInvoiceById(id: string): Promise<InvoiceForm | null> 
     const { rows } = await client.query(queryText, [id]);
 
     if (rows.length === 0) {
-      return null; 
+      return null;
     }
 
     const invoice: InvoiceForm = {
