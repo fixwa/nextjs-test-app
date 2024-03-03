@@ -3,7 +3,8 @@ import {InvoiceForm, LatestInvoice} from '../definitions';
 import {unstable_noStore as noStore} from "next/dist/server/web/spec-extension/unstable-no-store";
 
 export const fetchLatestInvoices = async (): Promise<LatestInvoice[]> => {
-    const {rows} = await pool.query(`
+    try {
+        const result = await pool.query(`
     SELECT 
         invoices.amount, 
         customers.name, 
@@ -15,13 +16,11 @@ export const fetchLatestInvoices = async (): Promise<LatestInvoice[]> => {
     LIMIT 5
   `);
 
-    return rows.map((row: any): LatestInvoice => ({
-        id: row.id,
-        name: row.name,
-        image_url: row.image_url,
-        email: row.email,
-        amount: `$${parseFloat(row.amount)}`,
-    }));
+        return result.rows as LatestInvoice[];
+    } catch (err) {
+        console.error('Database Error:', err);
+        throw new Error('Failed to fetch all customers.');
+    }
 };
 
 export async function fetchFilteredInvoices(query: string, currentPage: number) {
